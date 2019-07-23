@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="HOXI's blog"><meta name="keywords" content="Machine Learning"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><title>机器学习算法(一) KNN算法 | HOXI一二三</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">机器学习算法(一) KNN算法</h1><a id="logo" href="/.">HOXI一二三</a><p class="description">good good study, day day up!</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">机器学习算法(一) KNN算法</h1><div class="post-meta"><a href="/2019/07/23/KNN算法/#comments" class="comment-count"></a><p><span class="date">Jul 23, 2019</span><span><a href="/categories/学习总结/" class="category">学习总结</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="机器学习算法-一-KNN算法"><a href="#机器学习算法-一-KNN算法" class="headerlink" title="机器学习算法(一) KNN算法"></a>机器学习算法(一) KNN算法</h2><h4 id="K近邻算法简介："><a href="#K近邻算法简介：" class="headerlink" title="K近邻算法简介："></a>K近邻算法简介：</h4><p>KNN（K Near Neighbor）：K近邻算法，意思就是一个样本的特征可以用与它最近的 K 个邻居的特征来确定，如果 K 个邻居中大多数属于某一类别，那么认为该样本也属于这个类别。<br>例如：有一百个程序员，坐在小秃周围最近的20个人中，有18个人在学机器学习，那么根据 KNN算法 我们认为小秃也在学习机器学习。</p>
+<h5 id="KNN算法基本流程："><a href="#KNN算法基本流程：" class="headerlink" title="KNN算法基本流程："></a>KNN算法基本流程：</h5><ol>
+<li>计算测试样本与各样本间的距离</li>
+<li>按照距离的递增关系进行排序</li>
+<li>确定 K 值，并选取距离最小的 K 个点</li>
+<li>确定这 K 个点所在类别的出现频率</li>
+<li>返回频率最高的类别作为测试样本的分类</li>
+</ol>
+<h5 id="如何确定-K-值？"><a href="#如何确定-K-值？" class="headerlink" title="如何确定 K 值？"></a>如何确定 K 值？</h5><p>K：临近数，即要选取多少个邻居用来确定测试样本的类别。<br>K 值的选择非常重要：如果 K 值过小，噪声很有可能会对预测结果产生较大影响，容易发生过拟合；如果 K 值过大，距离较远的邻居也会对预测结果产生影响，在 K==N时，就是取全体实例作为参照，失去了预测的意义。<br>K 值尽量取奇数，以防止类别中的样本数相等，不利于预测。<br>取值方法一般是从 K=1 开始逐渐增大，每次用测试机得到一个分类器误差率，选取误差率最小的 K 值；一般K的取值不超过20，上限是 N 开根号，随着数据集增大，K 的取值范围也要扩大。</p>
+<h5 id="如何确定样本间的距离？"><a href="#如何确定样本间的距离？" class="headerlink" title="如何确定样本间的距离？"></a>如何确定样本间的距离？</h5><ol>
+<li><p>欧氏距离（两点之间的直线距离）<br>各个维度之差的平方相加，开根号。（可以理解为三角形的斜边）</p>
+<img src="/2019/07/23/KNN算法/欧氏距离.png" title="欧氏距离">
+</li>
+<li><p>曼哈顿距离（出租车距离）<br>各个维度之差的绝对值之和。（可以理解为三角形两条直角边相加）</p>
+<img src="/2019/07/23/KNN算法/曼哈顿距离.png" title="曼哈顿距离">
+</li>
+<li><p>切比雪夫距离（国王距离 - 国际象棋）<br>各个维度之差的绝对值中的最大值。</p>
+<img src="/2019/07/23/KNN算法/切比雪夫距离.png" title="切比雪夫距离">
+</li>
+<li><p>闵可夫斯基距离（闵氏距离）<br>前三种距离的通用表达式：</p>
+<img src="/2019/07/23/KNN算法/闵氏距离.png" title="闵氏距离">
+
+<p>  p = 1 时，就是曼哈顿距离；<br>  p = 2 时，就是欧氏距离；<br>  p = ∞ 时，就是切比雪夫距离</p>
+<p><strong>以上四种距离都有明显的缺点：</strong></p>
+</li>
+</ol>
+<ul>
+<li><strong>将各个分量的量纲（单位）同等看待了，也就是说只在意数据特征的取值，而不在意数据特征的意义，很显然身高相差 10cm 与体重相差 10kg 不可以划等号；</strong></li>
+<li><strong>未考虑到到各个分量的分布（期望、方差等）可能是不同的。</strong></li>
+</ul>
+<ol start="5">
+<li><p>马氏距离（考虑了特征的量纲、方差的欧氏距离）<br>带有比例的计算欧氏距离</p>
+<img src="/2019/07/23/KNN算法/马氏距离.png" title="马氏距离">
+
+<p>要求：总体样本数大于样本维度。</p>
+</li>
+<li><p>标准化欧氏距离（加权欧氏距离）<br>针对欧氏距离的缺点进行了改进：既然数据在各维度上分布不同，那么先将各个分量都“标准化”到均值、方差相等，再进行计算。<br>假设样本集 X 的均值为 m，标准差为 s，X 标准化可以表示为：</p>
+<img src="/2019/07/23/KNN算法/标准化欧氏距离.png" title="标准化欧氏距离">
+</li>
+<li><p>汉明距离<br>两个等长字符串，将其中一个变为另一个，所需要进行的最小字符替换次数。<br>  例如：11001100 -&gt; 11011101 汉明距离为 2。<br>  汉明重量：字符串相对于等长的零字符串的汉明距离。</p>
+</li>
+<li><p>杰卡德距离<br>杰卡德相似系数：两个集合的交集元素在他们的并集中所占的比例</p>
+<img src="/2019/07/23/KNN算法/杰卡德相似系数.png" title="杰卡德相似系数">
+<p>杰卡德距离：与杰卡德相似系数相反，两个集合中的不同元素占所有元素的比例</p>
+<img src="/2019/07/23/KNN算法/杰卡德距离.png" title="杰卡德距离">
+
+</li>
+</ol>
+<h4 id="K近邻算法的实现：kd树"><a href="#K近邻算法的实现：kd树" class="headerlink" title="K近邻算法的实现：kd树"></a>K近邻算法的实现：kd树</h4><p>在KNN预测时，每预测一个点我们就要训练集中每个点到这个点的距离，在数据集很大时，这样做的计算成本非常大。对于 N 个样本 D 个特征的数据集，算法复杂度为O(DN^2)。<br>为了提高 K 近邻算法搜索的效率，可以试着用特殊的结构存储训练数据，从而减少计算距离的次数 - kd树。<br>其原理可以理解为：A 距离 B 很远，B 距离 C 很近，那么 A 距离 C 也很远</p>
+<h5 id="那么-kd-树应该如何进行构造？"><a href="#那么-kd-树应该如何进行构造？" class="headerlink" title="那么 kd 树应该如何进行构造？"></a>那么 kd 树应该如何进行构造？</h5><p>kd 树是一个二叉树，构造 kd 树时首先构造根节点，通过该节点将数据集分为两个部分，此时数据集变成了两个集合和一个节点的组合；再通过递归的方法，不断地对数据集进行切分，直到子区域内没有节点为止；<br>通常，循环选择坐标轴对空间进行切分；选择训练实例点在坐标轴上的中位数作为切分点，这样得到的 kd 树是平衡的（平衡二叉树，左子树和右子树的深度之差的绝对值不超过1，而且各子树也都是平衡二叉树）；</p>
+<h5 id="那么在构建-kd-树时，选择向量的哪一维度进行划分呢？"><a href="#那么在构建-kd-树时，选择向量的哪一维度进行划分呢？" class="headerlink" title="那么在构建 kd 树时，选择向量的哪一维度进行划分呢？"></a>那么在构建 kd 树时，选择向量的哪一维度进行划分呢？</h5><p>选择方差较大的维度，因为方差越大数据越分散，这样构建的树会比较平衡。</p>
+<p>例如：样本集{(2, 3), (5, 4), (9, 6), (4, 7), (8, 1), (7, 2)}</p>
+<p>​         <img src="/2019/07/23/KNN算法/kd树.png" title="kd树">   </p>
+<h5 id="kd-树的检索"><a href="#kd-树的检索" class="headerlink" title="kd 树的检索"></a>kd 树的检索</h5><p>在 kd树中，以测试点 A 为圆心，以测试点 A 与 其所在子空间中的样本点 B 之间的距离为半径，画一个圆；如果与其他子空间没有交点，则 测试点 A 与 样本点 B 的分类相同，如果与其他子空间有交点，则计算测试点 A 与有关子空间中的样本点 C、D、F …之间的距离，取距离为最小值的样本点，并确定测试点 A 的分类预期一致。<br>下面是两种情况的对比图：</p>
+<img src="/2019/07/23/KNN算法/kd树的检索.png" title="kd树的检索">
+
+
+
+<h4 id="KNN-算法总结"><a href="#KNN-算法总结" class="headerlink" title="KNN 算法总结"></a>KNN 算法总结</h4><p>KNN算法是最简单有效的<strong>分类算法</strong>，简单且容易实现。当训练数据集很大时，需要大量的存储空间，而且需要计算待测样本和训练数据集中所有样本的距离，所以会非常耗时；</p>
+<p>KNN算法对于随机分布的数据集分类效果较差，对于类内间距小，类间间距大的数据集分类效果好，而且对于边界不规则的数据效果好于线性分类器；</p>
+<p>KNN算法对于样本不均衡的数据效果不好，需要进行改进。改进的方法是对k个近邻数据赋予权重，比如距离测试样本越近，权重越大（马氏距离）。</p>
+<p>KNN算法很耗时，时间复杂度为O(n)，一般适用于样本数较少的数据集，当数据量大时，可以将数据以树的形式呈现，能提高速度，常用的有kd-tree和ball-tree。</p>
+</div><div class="post-copyright"><blockquote><p>原文作者: HOXI</p><p>原文链接: <a href="http://hoxii.com/2019/07/23/KNN算法/">http://hoxii.com/2019/07/23/KNN算法/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/机器学习/">机器学习</a><a href="/tags/算法/">算法</a><a href="/tags/KNN/">KNN</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习算法-一-KNN算法"><span class="toc-text">机器学习算法(一) KNN算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#K近邻算法简介："><span class="toc-text">K近邻算法简介：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#KNN算法基本流程："><span class="toc-text">KNN算法基本流程：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如何确定-K-值？"><span class="toc-text">如何确定 K 值？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如何确定样本间的距离？"><span class="toc-text">如何确定样本间的距离？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#K近邻算法的实现：kd树"><span class="toc-text">K近邻算法的实现：kd树</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#那么-kd-树应该如何进行构造？"><span class="toc-text">那么 kd 树应该如何进行构造？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#那么在构建-kd-树时，选择向量的哪一维度进行划分呢？"><span class="toc-text">那么在构建 kd 树时，选择向量的哪一维度进行划分呢？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#kd-树的检索"><span class="toc-text">kd 树的检索</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#KNN-算法总结"><span class="toc-text">KNN 算法总结</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/07/23/KNN算法/">机器学习算法(一) KNN算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学习总结/">学习总结</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/KNN/" style="font-size: 15px;">KNN</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://www.bilibili.com/" title="哔哩哔哩" target="_blank">哔哩哔哩</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">HOXI.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>
